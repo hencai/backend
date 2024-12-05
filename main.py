@@ -75,10 +75,29 @@ async def detect_objects(file: UploadFile = File(...)):
             cv2.imwrite(output_path, img)
             logger.info(f"结果图片已保存: {output_path}")
 
+            # 处理检测结果为可序列化的格式
+            processed_result = []
+            if isinstance(result, (list, tuple)):
+                for class_results in result:
+                    if isinstance(class_results, np.ndarray):
+                        # 将每个检测结果转换为列表
+                        detections = []
+                        for detection in class_results:
+                            det_dict = {
+                                'bbox': detection[:5].tolist(),  # 前5个值是边界框坐标
+                                'score': float(detection[5])     # 第6个值是置信度分数
+                            }
+                            detections.append(det_dict)
+                        processed_result.append(detections)
+            else:
+                # 如果结果是单个 ndarray
+                if isinstance(result, np.ndarray):
+                    processed_result = result.tolist()
+
             return {
                 "success": True,
                 "image_url": f"/api/results/{Path(output_path).name}",
-                "detections": result
+                "detections": processed_result
             }
 
         except Exception as e:
@@ -88,7 +107,8 @@ async def detect_objects(file: UploadFile = File(...)):
         finally:
             # 清理临时文件
             try:
-                os.unlink(temp_path)
+                if os.path.exists(temp_path):
+                    os.unlink(temp_path)
                 logger.info("临时文件已清理")
             except Exception as e:
                 logger.error(f"清理临时文件失败: {str(e)}")
