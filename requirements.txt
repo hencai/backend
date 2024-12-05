@@ -1,0 +1,13 @@
+fastapi>=0.68.0
+uvicorn>=0.15.0
+python-multipart>=0.0.5
+pillow>=8.3.1
+numpy>=1.21.0
+opencv-python>=4.5.3.56
+torch>=1.9.0
+torchvision>=0.10.0
+mmcv-full>=1.4.0
+mmdet>=2.14.0
+mmrotate>=0.3.0
+python-jose>=3.3.0
+passlib>=1.7.4 
