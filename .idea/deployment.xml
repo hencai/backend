@@ -5,12 +5,17 @@
       <paths name="服务器4-backend">
         <serverdata>
           <mappings>
+<<<<<<< HEAD
             <mapping deploy="/mnt/bp/backend" local="$PROJECT_DIR$" web="/" />
           </mappings>
           <excludedPaths>
             <excludedPath path="/mnt/bp/backend/checkpoints" />
             <excludedPath local="true" path="$PROJECT_DIR$/checkpoints" />
           </excludedPaths>
+=======
+            <mapping deploy="/mnt/bp/backend" local="$PROJECT_DIR$" />
+          </mappings>
+>>>>>>> origin/master
         </serverdata>
       </paths>
     </serverData>
